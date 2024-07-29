@@ -1,0 +1,60 @@
+package jpabook.jpabook.domain;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import static jakarta.persistence.FetchType.LAZY;
+
+@Entity
+@Table(name = "orders")
+@Getter @Setter
+public class Order {
+
+    @Id @GeneratedValue
+    @Column(name = "order_id")
+    private Long id;
+
+    //즉시로딩은 JPQL을 실행할 때 개복잡해짐. 실무에서 모든 연관관계는 지연로딩(LAZY)로 설정해야함.
+    //XtoOne(OneToOne, ManyToOne)관계는 기본이 즉시로딩이므로 지연로딩(LAZY)로설정해야 한다.
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems = new ArrayList<>();
+
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_id")
+    private Delivery delivery;
+
+    private LocalDateTime orderDate; //주문시간
+
+    @Enumerated(EnumType.STRING) //ORDINAL로 사용하면 숫자로 들어가서 나중에 status가 중간에 다른 값이 들어가면 바로 개망함. 절대 쓰지말것
+    private OrderStatus status; //[ORDER] [CANCLE]
+
+    //==연관관계 메서드==//
+    public void setMember(Member member){
+        this.member = member;
+        member.getOrders().add(this);
+    }
+
+    public void addOrderItem(OrderItem orderItem){
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+    public void setDelivery(Delivery delivery){
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
+
+
+
+
+
+}
