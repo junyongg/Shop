@@ -2,6 +2,7 @@ package jpabook.jpabook.domain.item;
 
 import jakarta.persistence.*;
 import jpabook.jpabook.domain.Category;
+import jpabook.jpabook.domain.OrderItem;
 import jpabook.jpabook.exception.NotEnoughStockException;
 import lombok.Getter;
 import lombok.Setter;
