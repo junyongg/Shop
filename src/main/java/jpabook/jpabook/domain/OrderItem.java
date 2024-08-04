@@ -2,13 +2,16 @@ package jpabook.jpabook.domain;
 
 import jakarta.persistence.*;
 import jpabook.jpabook.domain.item.Item;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED) //짜놓은 생성 메서드 외에 다른 스타일로 다른사람이 코딩하는걸 막기 위해서 생성자 호출을 막아놓는 코드 생성자 protected 와 같은거임
 public class OrderItem {
 
     @Id @GeneratedValue
