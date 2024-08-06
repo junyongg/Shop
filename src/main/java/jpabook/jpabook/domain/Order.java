@@ -39,7 +39,7 @@ public class Order {
     private LocalDateTime orderDate; //주문시간
 
     @Enumerated(EnumType.STRING) //ORDINAL로 사용하면 숫자로 들어가서 나중에 status가 중간에 다른 값이 들어가면 바로 개망함. 절대 쓰지말것
-    private OrderStatus status; //[ORDER] [CANCLE]
+    private OrderStatus status; //[ORDER] [CANCEL]
 
     //==연관관계 메서드==//
     public void setMember(Member member){
