@@ -1,5 +1,6 @@
 package jpabook.jpabook.service;
 
+import jpabook.jpabook.domain.item.Book;
 import jpabook.jpabook.domain.item.Item;
 import jpabook.jpabook.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,17 @@ public class ItemService {
     @Transactional
     public void saveItem(Item item) {
         itemRepository.save(item);
+    }
+
+    @Transactional //TX가 있으니까 set된 데이터들을 JPA가 자동으로 커밋 & 플러쉬해서 업데이트 시켜줌
+    public Item updateItem(Long itemId, Book param){
+        Item findItem = itemRepository.findOne(itemId);
+        findItem.setPrice(param.getPrice());
+        findItem.setName(param.getName());
+        findItem.setPrice(param.getPrice());
+        findItem.setStockQuantity(param.getStockQuantity());
+
+        return findItem;
     }
 
     public List<Item> findItems(){
