@@ -22,14 +22,14 @@ public class ItemService {
     }
 
     @Transactional //TX가 있으니까 set된 데이터들을 JPA가 자동으로 커밋 & 플러쉬해서 업데이트 시켜줌
-    public Item updateItem(Long itemId, Book param){
+    public void updateItem(Long itemId, String name, int price, int stockQuantity ){
         Item findItem = itemRepository.findOne(itemId);
-        findItem.setPrice(param.getPrice());
-        findItem.setName(param.getName());
-        findItem.setPrice(param.getPrice());
-        findItem.setStockQuantity(param.getStockQuantity());
-
-        return findItem;
+        //findItem.change(name, price, stockQuantity);
+        //set을 남발하면 데이터 변경 부분을 추적하기가 어렵다. 그니까 무조건 그 데이터 변경에 맞는 메소드를 만드는게 낫다
+        //어디에? 엔티티쪽에 ㅋㅋ
+        findItem.setName(name);
+        findItem.setPrice(price);
+        findItem.setStockQuantity(stockQuantity);
     }
 
     public List<Item> findItems(){
